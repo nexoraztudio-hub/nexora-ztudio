@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b17">
+<title>Content Calendar | NEXORA ZTUDIO</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#090b17;color:#f6f4ff}
+*{box-sizing:border-box}body{margin:0;padding:22px 14px 65px;background:radial-gradient(ellipse at top,#271641,#090b17 55%);min-height:100vh}
+.wrap{max-width:950px;margin:auto}header{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:28px}
+nav{display:flex;gap:14px;flex-wrap:wrap}a{color:#c9aaff;text-decoration:none}h1{font-size:clamp(30px,7vw,44px);margin:16px 0 8px}h1 span{color:#aa86ff}h2{margin:0 0 18px;font-size:23px}h3{margin:0 0 8px}
+p{line-height:1.55}.muted{color:#b8b6ce}.small{font-size:13px}.card{background:#19192e;border:1px solid #454464;border-radius:23px;padding:22px;margin:22px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.field{min-width:0}label{display:block;font-weight:650;margin:12px 0 7px}input,select,textarea{width:100%;background:#0e1020;border:1px solid #515170;border-radius:13px;color:#fff;padding:13px;font:inherit;min-height:49px}textarea{min-height:125px;resize:vertical}button{border:1px solid #5b5984;border-radius:13px;padding:12px 16px;background:#30304f;color:#fff;font:inherit;font-weight:650;cursor:pointer}button.primary{border:0;background:linear-gradient(100deg,#8339ee,#2769ee)}button.danger{background:#462332;border-color:#bd5679}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}.notice{min-height:24px;color:#a5edc4}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.metric{border:1px solid #484563;border-radius:15px;padding:14px;background:#111126}.metric strong{display:block;font-size:26px}.list{display:grid;gap:14px}.item{padding:18px;border:1px solid #474469;border-radius:18px;background:#101124;overflow-wrap:anywhere}.meta{color:#b6b4d3;font-size:14px}.description{white-space:pre-wrap}.picker{max-height:230px;overflow:auto;border:1px solid #444467;border-radius:13px;padding:9px}.pick{display:flex;align-items:flex-start;gap:10px;padding:7px}.pick input{width:20px;min-height:20px;height:20px;margin:2px}.pick label{margin:0;font-weight:400}.empty{padding:24px;text-align:center;color:#b8b6ce;border:1px dashed #504e70;border-radius:14px}.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}.toolbar select{width:auto;max-width:100%}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:14px}.dow{text-align:center;font-size:12px;color:#bbb6d9;padding:7px 0}.day{min-height:91px;border:1px solid #3f3d60;background:#101025;border-radius:11px;padding:6px;min-width:0}.day.dim{opacity:.35}.day.today{border-color:#ac8bff}.daynum{font-size:12px;color:#ccc8e7;margin-bottom:5px}.chip{display:block;width:100%;padding:5px;border-radius:7px;border:0;margin-bottom:4px;font-size:11px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#35315e}.chip.published{background:#174f42}.chip.ready{background:#21476b}.chip.skipped{background:#5b3037}.legend{font-size:13px;color:#aaa7c4}.footer{padding-top:22px;font-size:13px;color:#9997b5}@media(max-width:540px){.grid{grid-template-columns:1fr}.card{padding:18px}.day{min-height:73px;padding:4px}.chip{font-size:10px}.calendar{gap:3px}.metrics{gap:6px}.metric{padding:10px}.metric strong{font-size:21px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header><strong>✦ NEXORA ZTUDIO</strong><nav><a href="dashboard.html">Dashboard</a><a href="projects.html">Projects</a><a href="clients.html">Brands</a><a href="campaigns.html">Campaigns</a></nav></header>
+<h1>Content <span>Calendar</span></h1>
+<p class="muted">Plan posts for your saved campaigns, attach creative work and track what is ready or published. Everything is saved locally on this browser.</p>
+<div class="metrics"><div class="metric"><strong id="postCount">0</strong><span class="small muted">Scheduled posts</span></div><div class="metric"><strong id="readyCount">0</strong><span class="small muted">Ready</span></div><div class="metric"><strong id="publishedCount">0</strong><span class="small muted">Published</span></div></div>
+<section class="card">
+<h2 id="formTitle">Schedule a post</h2>
+<form id="postForm">
+<div class="grid">
+<div class="field"><label for="postTitle">Post title *</label><input id="postTitle" required maxlength="130" placeholder="e.g. Premium wash before & after"></div>
+<div class="field"><label for="campaign">Campaign *</label><select id="campaign" required></select></div>
+<div class="field"><label for="platform">Platform *</label><select id="platform"><option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>Other</option></select></div>
+<div class="field"><label for="status">Publishing status</label><select id="status"><option>Draft</option><option>Ready</option><option>Published</option><option>Skipped</option></select></div>
+<div class="field"><label for="postDate">Posting date *</label><input type="date" id="postDate" required></div>
+<div class="field"><label for="postTime">Posting time *</label><input type="time" id="postTime" value="18:00" required></div>
+</div>
+<label>Attach creative projects from this campaign</label><div class="picker" id="creativePicker"></div>
+<label for="postCaption">Post caption / publishing instructions</label><textarea id="postCaption" placeholder="Write post instructions or a caption here..."></textarea>
+<label for="postNotes">Internal notes</label><textarea id="postNotes" placeholder="e.g. Confirm final video with client"></textarea>
+<div class="actions"><button class="primary" id="saveBtn" type="submit">💾 Save post</button><button id="clearBtn" type="button">Clear form</button><button id="reloadBtn" type="button">↻ Refresh saved references</button></div>
+</form><p id="notice" class="notice" role="status" aria-live="polite"></p>
+<p class="small muted">Planning only — this page does not post automatically to TikTok, Instagram or Facebook. Published status is set manually.</p>
+</section>
+<section class="card"><div class="toolbar"><h2>Monthly calendar</h2><div class="actions"><button type="button" id="prevMonth" aria-label="Previous month">←</button><button type="button" id="todayMonth">Today</button><button type="button" id="nextMonth" aria-label="Next month">→</button></div></div><h3 id="monthLabel"></h3><div id="calendar" class="calendar" aria-label="Scheduled post calendar"></div><p class="legend">Tap a post on the calendar to edit it. Times are shown in your device's local timezone.</p></section>
+<section class="card"><h2>Publishing queue</h2><div class="grid"><div><label for="filterStatus">Filter by status</label><select id="filterStatus"><option value="">All statuses</option><option>Draft</option><option>Ready</option><option>Published</option><option>Skipped</option></select></div><div><label for="search">Search posts</label><input id="search" type="search" placeholder="Search title or campaign"></div></div><div id="postList" class="list" style="margin-top:18px"></div></section>
+<section class="card"><h2>Content calendar backup</h2><p class="muted">This exports only Step 11 posts. Export projects, brand data and campaign data separately from their respective managers.</p><div class="actions"><button id="exportBtn" type="button">⬇️ Export calendar backup</button><button id="importBtn" type="button">⬆️ Import calendar backup</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section>
+<p class="footer">© 2026 NEXORA ZTUDIO · Local planning tool · No automatic social publishing</p>
+</main>
+<script>
+(()=>{'use strict';
+const POST_KEY='nexora_ztudio_calendar_v1';
+const CAMPAIGN_KEY='nexora_ztudio_campaigns_v1';
+const PROJECT_KEY='nexora_ztudio_projects_v1';
+const BRAND_KEY='nexora_ztudio_brands_v1';
+// Only POST_KEY is written by this page.
+const $=id=>document.getElementById(id);
+let posts=[],campaigns=[],projects=[],brands=[],editingId=null,ready=true;
+let month=new Date();month.setDate(1);
+const statuses=['Draft','Ready','Published','Skipped'];
+const platforms=['TikTok','Instagram','Facebook','YouTube','Other'];
+const uid=()=>`post-${Date.now()}-${Math.random().toString(36).slice(2,10)}`;
+function arrayAt(key){const raw=localStorage.getItem(key);if(raw===null)return [];const value=JSON.parse(raw);if(!Array.isArray(value))throw Error('Invalid saved data: '+key);return value;}
+function persist(next){localStorage.setItem(POST_KEY,JSON.stringify(next));posts=next;}
+function valid(p){return p&&typeof p==='object'&&!Array.isArray(p)&&typeof p.id==='string'&&!!p.id&&typeof p.title==='string'&&!!p.title.trim()&&typeof p.campaignId==='string'&&platforms.includes(p.platform)&&statuses.includes(p.status)&&/^\d{4}-\d{2}-\d{2}$/.test(p.date)&&/^\d{2}:\d{2}$/.test(p.time)&&Array.isArray(p.projectIds)&&p.projectIds.every(x=>typeof x==='string')&&typeof p.caption==='string'&&typeof p.notes==='string'&&typeof p.updatedAt==='string';}
+function el(tag,text,className){const e=document.createElement(tag);if(text!==undefined)e.textContent=String(text);if(className)e.className=className;return e;}
+function btn(text,callback,className){const b=el('button',text,className);b.type='button';b.addEventListener('click',callback);return b;}
+function notice(text,error=false){$('notice').textContent=text;$('notice').style.color=error?'#ff9dab':'#9cebc7';}
+function campaignById(id){return campaigns.find(c=>c&&String(c.id)===id);}
+function projectById(id){return projects.find(p=>p&&String(p.id)===id);}
+function brandName(id){const b=brands.find(x=>x&&String(x.id)===String(id));return b?String(b.name):'Unknown brand';}
+function campaignName(id){const c=campaignById(id);return c?String(c.name):'Missing campaign';}
+function checkedProjects(){return [...$('creativePicker').querySelectorAll('input:checked')].map(x=>x.value);}
+function renderPicker(selected=[]){const picker=$('creativePicker');picker.replaceChildren();const c=campaignById($('campaign').value);if(!c){picker.append(el('div','Select a saved campaign to see its assigned creative projects.','muted small'));return;}
+const ids=Array.isArray(c.projectIds)?c.projectIds:[];if(!ids.length){picker.append(el('div','This campaign has no assigned creative projects. You can still schedule a post.','muted small'));return;}
+for(const id of ids){const p=projectById(id);const line=el('div',undefined,'pick'),input=el('input'),label=el('label',p?`${p.title} · ${p.type}`:`Missing project (${id})`);input.type='checkbox';input.value=id;input.checked=selected.includes(id);input.disabled=!p;line.append(input,label);picker.append(line);}}
+function renderCampaigns(){const previous=$('campaign').value;const select=$('campaign');select.replaceChildren();select.add(new Option(campaigns.length?'Choose a campaign':'Create a campaign in Campaign Manager first',''));for(const c of campaigns){if(c&&c.id!=null)select.add(new Option(`${c.name} · ${brandName(c.brandId)}`,String(c.id)));}if(campaignById(previous))select.value=previous;renderPicker(checkedProjects());}
+function reset(){editingId=null;$('postForm').reset();$('postTime').value='18:00';$('formTitle').textContent='Schedule a post';$('saveBtn').textContent='💾 Save post';renderCampaigns();}
+function edit(p){editingId=p.id;$('postTitle').value=p.title;$('campaign').value=p.campaignId;$('platform').value=p.platform;$('status').value=p.status;$('postDate').value=p.date;$('postTime').value=p.time;$('postCaption').value=p.caption;$('postNotes').value=p.notes;renderPicker(p.projectIds);$('formTitle').textContent='Edit scheduled post';$('saveBtn').textContent='💾 Update existing post';window.scrollTo({top:0,behavior:'smooth'});notice('Editing saved post — updating it will keep the same ID.');}
+function dateLabel(s){const [y,m,d]=s.split('-');return `${d}/${m}/${y}`;}
+function renderQueue(){const list=$('postList');list.replaceChildren();const q=$('search').value.trim().toLowerCase(),s=$('filterStatus').value;
+const view=[...posts].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).filter(p=>(!s||p.status===s)&&(!q||[p.title,campaignName(p.campaignId),p.platform,p.caption].join(' ').toLowerCase().includes(q)));
+if(!view.length){list.append(el('div',posts.length?'No posts match your filters.':'No posts yet. Schedule your first post.','empty'));return;}
+for(const p of view){const c=campaignById(p.campaignId),card=el('article',undefined,'item');card.append(el('h3',p.title));card.append(el('div',`${dateLabel(p.date)} · ${p.time} · ${p.platform} · ${p.status}`,'meta'));card.append(el('p',`Campaign: ${campaignName(p.campaignId)}${c?' · '+brandName(c.brandId):''}`,'meta'));if(p.caption)card.append(el('p',p.caption,'description'));if(p.notes)card.append(el('p','Notes: '+p.notes,'description muted'));const attached=el('p',`Creative work (${p.projectIds.length}): `,'meta');attached.append(el('span',p.projectIds.map(id=>{const proj=projectById(id);return proj?proj.title:'Missing project '+id;}).join('; ')||'None'));card.append(attached);const actions=el('div',undefined,'actions');actions.append(btn('Edit',()=>edit(p)));if(p.status!=='Published')actions.append(btn('Mark published',()=>changeStatus(p,'Published')));actions.append(btn('Delete',()=>{if(!confirm('Delete scheduled post "'+p.title+'"? Other projects and campaigns will not be deleted.'))return;try{persist(posts.filter(x=>x.id!==p.id));if(editingId===p.id)reset();renderAll();notice('Scheduled post deleted.');}catch(e){notice(e.message,true);}},'danger'));card.append(actions);list.append(card);}}
+function changeStatus(post,status){const next=posts.map(p=>p.id===post.id?{...p,status,updatedAt:new Date().toISOString()}:p);try{persist(next);renderAll();notice('Marked as published. This does not publish to social media.');}catch(e){notice(e.message,true);}}
+function calendarDate(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function renderCalendar(){const container=$('calendar');container.replaceChildren();const y=month.getFullYear(),m=month.getMonth();$('monthLabel').textContent=month.toLocaleDateString(undefined,{month:'long',year:'numeric'});for(const day of ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'])container.append(el('div',day,'dow'));
+const first=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate();const count=Math.ceil((first+days)/7)*7;const today=new Date(),todayKey=calendarDate(today.getFullYear(),today.getMonth(),today.getDate());
+for(let i=0;i<count;i++){const number=i-first+1,validDay=number>=1&&number<=days,day=el('div',undefined,'day'+(validDay?'':' dim'));if(validDay){const key=calendarDate(y,m,number);if(key===todayKey)day.classList.add('today');day.append(el('div',number,'daynum'));for(const p of posts.filter(p=>p.date===key)){const b=btn(`${p.time} ${p.title}`,()=>edit(p),'chip '+p.status.toLowerCase());b.title=p.title+' — '+p.status;day.append(b);}}container.append(day);}}
+function renderAll(){$('postCount').textContent=String(posts.length);$('readyCount').textContent=String(posts.filter(p=>p.status==='Ready').length);$('publishedCount').textContent=String(posts.filter(p=>p.status==='Published').length);renderQueue();renderCalendar();}
+function refresh(){try{campaigns=arrayAt(CAMPAIGN_KEY);projects=arrayAt(PROJECT_KEY);brands=arrayAt(BRAND_KEY);renderCampaigns();renderAll();notice(`${campaigns.length} campaign(s), ${projects.length} creative project(s) detected.`);}catch(err){ready=false;$('saveBtn').disabled=true;notice('Cannot load your existing data: '+err.message+'. Do not clear browser data.',true);}}
+$('campaign').addEventListener('change',()=>renderPicker());
+$('postForm').addEventListener('submit',event=>{event.preventDefault();if(!ready)return;const c=campaignById($('campaign').value);if(!c){notice('Select an existing campaign first.',true);return;}const old=posts.find(p=>p.id===editingId);const item={id:old?old.id:uid(),title:$('postTitle').value.trim(),campaignId:String(c.id),platform:$('platform').value,status:$('status').value,date:$('postDate').value,time:$('postTime').value,projectIds:checkedProjects(),caption:$('postCaption').value,notes:$('postNotes').value,updatedAt:new Date().toISOString()};if(!valid(item)){notice('Please complete required fields.',true);return;}try{persist(old?posts.map(p=>p.id===old.id?item:p):[...posts,item]);reset();renderAll();notice(old?'✅ Post updated without duplication.':'✅ Post scheduled successfully.');}catch(e){notice('Save failed: '+e.message,true);}});
+$('clearBtn').addEventListener('click',()=>{reset();notice('Form reset. Existing posts unchanged.');});$('reloadBtn').addEventListener('click',refresh);$('search').addEventListener('input',renderQueue);$('filterStatus').addEventListener('change',renderQueue);
+$('prevMonth').addEventListener('click',()=>{month.setMonth(month.getMonth()-1);renderCalendar();});$('nextMonth').addEventListener('click',()=>{month.setMonth(month.getMonth()+1);renderCalendar();});$('todayMonth').addEventListener('click',()=>{month=new Date();month.setDate(1);renderCalendar();});
+$('exportBtn').addEventListener('click',()=>{const payload={format:'nexora-calendar-backup-v1',exportedAt:new Date().toISOString(),posts};const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download='nexora-calendar-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);notice('Calendar backup downloaded. Save it to iPhone Files.');});
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text());if(data.format!=='nexora-calendar-backup-v1'||!Array.isArray(data.posts)||!data.posts.every(valid))throw Error('Invalid Step 11 backup');const ids=data.posts.map(p=>p.id);if(new Set(ids).size!==ids.length)throw Error('Duplicate post IDs in backup');if(!confirm(`Import ${data.posts.length} scheduled posts? Matching IDs are updated.`))return;const merged=new Map(posts.map(p=>[p.id,p]));for(const post of data.posts)merged.set(post.id,post);persist([...merged.values()]);reset();renderAll();notice('✅ Calendar backup imported.');}catch(err){notice('Import failed: '+err.message,true);}finally{event.target.value='';}});
+try{posts=arrayAt(POST_KEY);if(!posts.every(valid))throw Error('Invalid existing calendar posts');refresh();}catch(err){ready=false;$('saveBtn').disabled=true;$('importBtn').disabled=true;notice('Could not read saved posts: '+err.message+'. Do not overwrite local storage.',true);}
+window.addEventListener('pageshow',()=>{if(ready)refresh();});
+})();
+</script>
+</body>
+</html>
