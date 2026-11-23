@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b17">
+<title>Project Manager | NEXORA ZTUDIO</title>
+<style>
+:root{color-scheme:dark;--bg:#090b17;--card:#17182d;--line:#373a60;--text:#f4f4ff;--muted:#b4b7cf;--purple:#9137f4;--blue:#2865f0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 90% 0%,#211d4c 0%,var(--bg) 45%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:1050px;margin:auto;padding:24px 18px 70px}header,.top,.actions,.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}header{margin-bottom:65px}.brand{font-weight:850;letter-spacing:2px;font-size:19px}.brand span{color:#56b7ff}a{color:#b9a9ff;text-decoration:none}a:hover{text-decoration:underline}nav{display:flex;gap:18px;flex-wrap:wrap}h1{font-size:clamp(32px,6vw,52px);line-height:1.12;margin:10px 0}h1 span{color:#ad77ff}.eyebrow{font-size:12px;letter-spacing:3px;font-weight:800;color:#66c8ff}.muted{color:var(--muted)}.intro{max-width:700px;margin-bottom:28px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}.card{background:rgba(23,24,45,.95);border:1px solid var(--line);border-radius:23px;padding:24px;min-width:0}h2{margin:0 0 16px;font-size:24px}label{display:block;margin:15px 0 6px;font-weight:700}input,select,textarea{width:100%;background:#0f1124;color:var(--text);border:1px solid #474a70;border-radius:12px;padding:13px 14px;font:inherit;min-width:0}textarea{min-height:180px;resize:vertical}input:focus,select:focus,textarea:focus{outline:2px solid #9971ff;outline-offset:1px}.btn{appearance:none;border:1px solid #55587d;border-radius:13px;padding:12px 16px;background:#2c2e4c;color:white;font:inherit;font-weight:750;cursor:pointer}.btn.primary{border:0;background:linear-gradient(105deg,var(--purple),var(--blue))}.btn.danger{border-color:#a85168;color:#ffd5dc;background:#3a202e}.btn:focus-visible{outline:3px solid #fff;outline-offset:2px}.actions{justify-content:flex-start;margin-top:18px}.toolbar{margin:0 0 16px}.toolbar input{flex:1;min-width:170px}.toolbar select{width:auto;max-width:100%}.project{border:1px solid #424568;border-radius:15px;padding:16px;margin-top:12px;background:#111327}.project h3{margin:0 0 5px;overflow-wrap:anywhere}.meta{font-size:13px;color:var(--muted);margin-bottom:9px}.preview{white-space:pre-wrap;overflow-wrap:anywhere;color:#d5d7ed;margin:8px 0 14px}.empty{padding:30px 12px;text-align:center;color:var(--muted);border:1px dashed #555779;border-radius:15px}.small{font-size:13px}.notice{margin:16px 0;padding:13px 15px;border:1px solid #54547d;border-radius:12px;background:#1c1d37}.status{min-height:22px;margin:12px 0;color:#b5ffd7}footer{margin-top:42px;color:var(--muted);font-size:13px}button:disabled{opacity:.5;cursor:not-allowed}@media(max-width:740px){.layout{grid-template-columns:1fr}header{margin-bottom:38px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">NEXORA <span>ZTUDIO</span></div><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="dashboard.html">Dashboard</a></nav></header>
+<main>
+<div class="eyebrow">YOUR CREATIVE WORKSPACE</div>
+<h1>Project <span>Manager</span></h1>
+<p class="muted intro">Save captions, ad scripts, and video storyboards for your business. Your projects stay in this browser unless you export a backup.</p>
+<div class="notice small">🔒 Local demo: no account, cloud sync, or AI connection. Avoid entering confidential customer information. Clearing browser data or using a different browser/device can make saved projects unavailable.</div>
+<div class="layout">
+<section class="card" aria-labelledby="editorTitle">
+<h2 id="editorTitle">Create a project</h2>
+<form id="projectForm">
+<input type="hidden" id="editingId">
+<label for="business">Business / brand name</label><input id="business" maxlength="100" required placeholder="e.g. Nexora Auto Spa">
+<label for="projectName">Project title</label><input id="projectName" maxlength="120" required placeholder="e.g. Weekend promotion">
+<label for="type">Content type</label><select id="type"><option>Caption</option><option>Ad Script</option><option>Video Storyboard</option><option>Other</option></select>
+<label for="content">Content / draft</label><textarea id="content" maxlength="50000" required placeholder="Paste your generated caption, ad script, or storyboard here..."></textarea>
+<div class="actions"><button class="btn primary" id="saveBtn" type="submit">💾 Save project</button><button class="btn" id="clearBtn" type="button">Clear form</button></div>
+</form><p class="status" id="status" role="status" aria-live="polite"></p>
+</section>
+<section class="card" aria-labelledby="savedTitle">
+<div class="top"><h2 id="savedTitle">Saved projects</h2><strong id="count">0</strong></div>
+<div class="toolbar"><input id="search" type="search" aria-label="Search projects" placeholder="Search projects..."><select id="filter" aria-label="Filter by content type"><option value="All">All types</option><option>Caption</option><option>Ad Script</option><option>Video Storyboard</option><option>Other</option></select></div>
+<div class="actions"><button class="btn" type="button" id="exportBtn">⬇ Export backup</button><button class="btn" type="button" id="importBtn">⬆ Import backup</button><input type="file" id="importFile" accept=".json,application/json" hidden></div>
+<p class="muted small">Export a backup regularly. Import merges projects by ID; matching IDs are replaced by the imported version.</p>
+<div id="projectsList"></div>
+</section>
+</div>
+</main><footer>© <span id="year"></span> NEXORA ZTUDIO · Built for creators and small businesses</footer>
+</div>
+<script>
+(()=>{
+'use strict';
+const KEY='nexora_ztudio_projects_v1';
+const $=id=>document.getElementById(id);
+const form=$('projectForm'), list=$('projectsList'), status=$('status');
+let projects=[];
+const types=['Caption','Ad Script','Video Storyboard','Other'];
+const valid=p=>p&&typeof p==='object'&&typeof p.id==='string'&&p.id.length<=150&&typeof p.business==='string'&&p.business.length<=100&&typeof p.title==='string'&&p.title.length<=120&&types.includes(p.type)&&typeof p.content==='string'&&p.content.length<=50000&&typeof p.updatedAt==='string';
+function notice(msg){status.textContent=msg;}
+function load(){try{const raw=localStorage.getItem(KEY);const data=raw?JSON.parse(raw):[];if(!Array.isArray(data))throw Error('Invalid stored data');projects=data.filter(valid);}catch(e){projects=[];notice('Could not read saved projects. Check browser storage before saving new work.');}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(projects));return true;}catch(e){notice('Saving failed. Browser storage may be full or disabled. Export your existing projects.');return false;}}
+function reset(){form.reset();$('editingId').value='';$('editorTitle').textContent='Create a project';$('saveBtn').textContent='💾 Save project';}
+function el(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;}
+function render(){const term=$('search').value.trim().toLowerCase(),type=$('filter').value;const filtered=projects.filter(p=>(type==='All'||p.type===type)&&[p.title,p.business,p.content].some(v=>v.toLowerCase().includes(term))).sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));$('count').textContent=String(projects.length);list.replaceChildren();if(!filtered.length){list.append(el('div','empty',projects.length?'No matching projects.':'No saved projects yet. Create your first project!'));return;}
+for(const p of filtered){const card=el('article','project'),heading=el('h3','',p.title),meta=el('div','meta',p.business+' · '+p.type+' · '+new Date(p.updatedAt).toLocaleString()),preview=el('p','preview',p.content.length>220?p.content.slice(0,220)+'…':p.content),actions=el('div','actions');const edit=el('button','btn','Edit'),copy=el('button','btn','Copy'),del=el('button','btn danger','Delete');for(const b of [edit,copy,del])b.type='button';edit.addEventListener('click',()=>{ $('editingId').value=p.id;$('business').value=p.business;$('projectName').value=p.title;$('type').value=p.type;$('content').value=p.content;$('editorTitle').textContent='Edit project';$('saveBtn').textContent='💾 Update project';window.scrollTo({top:0,behavior:'smooth'});$('business').focus();});copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(p.content);notice('Content copied.');}catch(e){notice('Copy was blocked by your browser. Open Edit and select the text manually.');}});del.addEventListener('click',()=>{if(!confirm('Delete "'+p.title+'"? This cannot be undone unless you have a backup.'))return;const old=projects;projects=projects.filter(x=>x.id!==p.id);if(persist()){if($('editingId').value===p.id)reset();render();notice('Project deleted.');}else projects=old;});actions.append(edit,copy,del);card.append(heading,meta,preview,actions);list.append(card);}}
+form.addEventListener('submit',event=>{event.preventDefault();if(!form.reportValidity())return;const id=$('editingId').value;const now=new Date().toISOString();const entry={id:id||('p-'+Date.now()+'-'+Math.random().toString(36).slice(2,10)),business:$('business').value.trim(),title:$('projectName').value.trim(),type:$('type').value,content:$('content').value.trim(),updatedAt:now};if(!entry.business||!entry.title||!entry.content){notice('Please fill in all fields.');return;}const old=projects;projects=id?projects.map(p=>p.id===id?entry:p):[entry,...projects];if(persist()){reset();render();notice(id?'Project updated successfully.':'Project saved successfully.');}else projects=old;});
+$('clearBtn').addEventListener('click',()=>{reset();notice('Form cleared.');});$('search').addEventListener('input',render);$('filter').addEventListener('change',render);
+$('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({app:'NEXORA ZTUDIO',version:1,exportedAt:new Date().toISOString(),projects},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='nexora-projects-backup.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('Backup download requested. Check your Downloads folder.');});
+$('importBtn').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',async event=>{const file=event.target.files[0];if(!file)return;try{if(file.size>5*1024*1024)throw Error('Backup file is too large (maximum 5 MB).');const data=JSON.parse(await file.text());if(data.app!=='NEXORA ZTUDIO'||data.version!==1||!Array.isArray(data.projects)||!data.projects.every(valid))throw Error('Invalid NEXORA ZTUDIO backup file.');if(!confirm('Import '+data.projects.length+' projects? Matching IDs will be replaced.'))return;const old=projects;const merged=new Map(projects.map(p=>[p.id,p]));for(const p of data.projects)merged.set(p.id,p);projects=[...merged.values()];if(persist()){reset();render();notice('Backup imported successfully.');}else projects=old;}catch(e){notice(e.message||'Could not import backup.');}finally{event.target.value='';}});
+$('year').textContent=new Date().getFullYear();load();render();
+})();
+</script>
+</body>
+</html>
