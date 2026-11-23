@@ -271,5 +271,115 @@ async function copyPlan(){
  }
 }
 </script>
+ 
+<script>
+(function () {
+  const KEY = "nexora_ztudio_projects_v1";
+
+  const scenes = document.getElementById("scenes");
+  const summary = document.getElementById("summary");
+
+  if (!scenes) return;
+
+  // Create Save to Projects button
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.textContent = "💾 Save to Projects";
+
+  // Button design
+  saveButton.style.display = "block";
+  saveButton.style.width = "100%";
+  saveButton.style.marginTop = "20px";
+  saveButton.style.padding = "16px";
+  saveButton.style.border = "none";
+  saveButton.style.borderRadius = "12px";
+  saveButton.style.color = "white";
+  saveButton.style.fontSize = "17px";
+  saveButton.style.fontWeight = "bold";
+  saveButton.style.cursor = "pointer";
+  saveButton.style.background =
+    "linear-gradient(90deg,#7c3aed,#2563eb)";
+
+  // Insert below storyboard scenes
+  scenes.insertAdjacentElement("afterend", saveButton);
+
+  // Save project when clicked
+  saveButton.addEventListener("click", function () {
+    const product =
+      document.getElementById("product")?.value.trim()
+      || "Untitled Product";
+
+    const business =
+      document.getElementById("business")?.value
+      || "NEXORA ZTUDIO";
+
+    const sceneCards =
+      scenes.querySelectorAll(".scene");
+
+    if (!sceneCards.length) {
+      alert("Generate a storyboard first.");
+      return;
+    }
+
+    const sceneText = Array.from(sceneCards)
+      .map(function (card) {
+        return card.innerText.trim();
+      })
+      .join("\n\n----------------\n\n");
+
+    const settings = summary
+      ? summary.innerText.trim()
+      : "";
+
+    const content = [
+      "NEXORA ZTUDIO - VIDEO STORYBOARD",
+      "",
+      "Business: " + business,
+      "Product: " + product,
+      "Settings: " + settings,
+      "",
+      "STORYBOARD SCENES",
+      "",
+      sceneText
+    ].join("\n");
+
+    const title = prompt(
+      "Project title:",
+      product + " Storyboard"
+    );
+
+    if (title === null) return;
+
+    try {
+      const projects = JSON.parse(
+        localStorage.getItem(KEY) || "[]"
+      );
+
+      if (!Array.isArray(projects)) {
+        throw new Error("Invalid project data");
+      }
+
+      projects.unshift({
+        id: "p-" + Date.now() + "-" +
+          Math.random().toString(36).slice(2, 8),
+        business: business,
+        title: title.trim() || product + " Storyboard",
+        type: "Storyboard",
+        content: content,
+        updatedAt: new Date().toISOString()
+      });
+
+      localStorage.setItem(
+        KEY,
+        JSON.stringify(projects)
+      );
+
+      alert("✅ Storyboard saved successfully!");
+    } catch (error) {
+      alert("Unable to save: " + error.message);
+    }
+  });
+})();
+</script>
 </body>
 </html>
