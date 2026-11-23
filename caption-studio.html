@@ -37,9 +37,14 @@ document.getElementById('copy').addEventListener('click',async()=>{const value=d
   const KEY = "nexora_ztudio_projects_v1";
 
   const copyButton = document.getElementById("copy");
-  const output = document.getElementById("output");
+  
+const output =
+  document.getElementById("output") ||
+  document.querySelector("#outputSection textarea");
 
-  if (!copyButton || !output) return;
+if (!copyButton) return;
+
+  
 
   const saveButton = document.createElement("button");
   saveButton.type = "button";
@@ -47,8 +52,11 @@ document.getElementById('copy').addEventListener('click',async()=>{const value=d
 
   copyButton.insertAdjacentElement("afterend", saveButton);
 
-  saveButton.addEventListener("click", function () {
-    const content = output.value || output.textContent;
+saveButton.addEventListener("click", function () {
+  const content = output
+    ? (output.value || output.textContent || "")
+    : (document.getElementById("outputSection")?.innerText || "");
+
     const product =
       document.getElementById("product")?.value || "Untitled";
 
