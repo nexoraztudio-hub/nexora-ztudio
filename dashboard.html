@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video Storyboard Studio | NEXORA ZTUDIO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090b17;color:#f4f4ff;font-family:Arial,sans-serif;line-height:1.6}
+.wrap{max-width:850px;margin:auto;padding:25px 18px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-weight:800;letter-spacing:3px}
+.logo span,.gradient{color:#aa83ff}
+a{color:#c3b2ff}
+h1{font-size:clamp(34px,7vw,55px);line-height:1.15;margin:20px 0}
+h2{margin-top:0}
+.muted{color:#b3b6ce}
+.tag{display:inline-block;border:1px solid #65518c;border-radius:30px;padding:8px 15px;margin-top:55px;font-size:13px}
+.card{background:#17182e;border:1px solid #393958;border-radius:25px;padding:25px;margin-top:28px}
+label{display:block;font-weight:bold;margin:18px 0 7px}
+input,select,textarea{width:100%;background:#0d1022;color:white;border:1px solid #454766;border-radius:13px;padding:15px;font:inherit}
+button{width:100%;border:0;border-radius:14px;padding:17px;color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:22px;background:linear-gradient(110deg,#8b35ec,#2863ee)}
+.secondary{background:#30334f;margin-top:12px}
+.scene{background:#101226;border:1px solid #454766;border-radius:15px;padding:18px;margin-top:15px}
+.scene strong{color:#b79aff}
+.scene p{white-space:pre-wrap;margin:8px 0}
+footer{margin:50px 0;color:#9c9eb9;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="logo">✦ NEXORA <span>ZTUDIO</span></div>
+<a href="index.html">← Home</a>
+</header>
+
+<div class="tag">FREE STORYBOARD PLANNER</div>
+<h1>Video <span class="gradient">Storyboard Studio</span></h1>
+<p class="muted">Plan your next TikTok, Instagram Reel or Facebook video with ready-to-edit scenes, voiceovers and filming ideas.</p>
+
+<div class="card">
+<h2>Create your storyboard</h2>
+
+<label for="business">Business category</label>
+<select id="business">
+<option>Car detailing / autospa</option>
+<option>Restaurant / cafe</option>
+<option>Beauty / skincare</option>
+<option>Fashion / retail</option>
+<option>Other business</option>
+</select>
+
+<label for="product">Product or service</label>
+<input id="product" value="Premium car wash" maxlength="100">
+
+<label for="style">Video style</label>
+<select id="style">
+<option value="promo">Promotional</option>
+<option value="story">Storytelling</option>
+<option value="educational">Educational</option>
+<option value="launch">Product launch</option>
+</select>
+
+<label for="duration">Video duration</label>
+<select id="duration">
+<option value="15">15 seconds</option>
+<option value="30" selected>30 seconds</option>
+<option value="60">60 seconds</option>
+</select>
+
+<label for="platform">Platform</label>
+<select id="platform">
+<option>TikTok</option>
+<option>Instagram Reels</option>
+<option>Facebook Reels</option>
+<option>YouTube Shorts</option>
+</select>
+
+<button onclick="generate()">✨ Generate storyboard</button>
+</div>
+
+<div class="card" id="result" hidden>
+<h2>Your video storyboard</h2>
+<p id="summary" class="muted"></p>
+<div id="scenes"></div>
+<button class="secondary" onclick="copyStoryboard()">Copy full storyboard</button>
+</div>
+
+<p class="muted" style="margin-top:25px;font-size:13px">Demo: This planner uses editable templates, not generative AI. No video is rendered. Your inputs are processed locally in your browser.</p>
+<footer>© 2026 NEXORA ZTUDIO</footer>
+</div>
+
+<script>
+let fullText="";
+
+function generate(){
+ const product=document.getElementById("product").value.trim();
+ if(!product){alert("Please enter a product or service.");return;}
+ const business=document.getElementById("business").value;
+ const style=document.getElementById("style").value;
+ const duration=Number(document.getElementById("duration").value);
+ const platform=document.getElementById("platform").value;
+
+ const ideas={
+ promo:[
+ ["Hook","Show the most attractive result first.","Want to upgrade your experience with {p}?"],
+ ["Problem","Show a common customer frustration.","Tired of settling for ordinary results?"],
+ ["Solution","Film the service or product in action.","Discover {p}, designed with care."],
+ ["Benefit","Show close-ups and the finished result.","See the difference for yourself."],
+ ["CTA","Display your business name and contact method.","Message us today to learn more."]
+ ],
+ story:[
+ ["Hook","Open with a relatable customer moment.","Every great result starts with a story."],
+ ["Challenge","Show the customer's original problem.","Finding the right solution is not always easy."],
+ ["Journey","Show the process behind your offering.","That is why we focus on {p}."],
+ ["Result","Reveal the transformation or outcome.","The little details make a big difference."],
+ ["CTA","Show your business name and next step.","Ready to start your own story? Contact us."]
+ ],
+ educational:[
+ ["Hook","Ask a question on screen.","What should you know about {p}?"],
+ ["Tip 1","Show a useful first step.","Start by understanding what you need."],
+ ["Tip 2","Demonstrate the process.","Look for quality, care and consistency."],
+ ["Tip 3","Show a practical example.","Choose the approach that suits your goals."],
+ ["CTA","Invite viewers to ask questions.","Follow us for more tips about {p}."]
+ ],
+ launch:[
+ ["Teaser","Show a close-up without revealing everything.","Something exciting is here."],
+ ["Reveal","Show the full product or service.","Introducing {p}!"],
+ ["Highlight","Film its most appealing features.","Created to make your experience better."],
+ ["Demo","Show how it works or what it delivers.","Take a closer look at what makes it special."],
+ ["CTA","Display a clear next step.","Contact us to find out more."]
+ ]
+ };
+
+ const selected=ideas[style];
+ const times=duration===15?[3,3,3,3,3]:duration===30?[4,6,8,7,5]:[8,12,16,14,10];
+ let start=0;
+ let html="";
+ fullText="NEXORA ZTUDIO VIDEO STORYBOARD\n";
+ fullText+="Business: "+business+"\nProduct: "+product+"\n";
+ fullText+="Platform: "+platform+"\nDuration: "+duration+" seconds\n\n";
+
+ selected.forEach((item,i)=>{
+  const end=start+times[i];
+  const voice=item[2].replaceAll("{p}",product);
+  const heading="Scene "+(i+1)+" | "+start+"-"+end+"s | "+item[0];
+  html+="<div class='scene'><strong>"+heading+"</strong><p><b>Visual:</b> "+escapeHTML(item[1])+"</p><p><b>Voiceover:</b> "+escapeHTML(voice)+"</p></div>";
+  fullText+=heading+"\nVisual: "+item[1]+"\nVoiceover: "+voice+"\n\n";
+  start=end;
+ });
+
+ document.getElementById("summary").textContent=duration+"-second "+platform+" video • 9:16 vertical format";
+ document.getElementById("scenes").innerHTML=html;
+ document.getElementById("result").hidden=false;
+ document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function escapeHTML(s){
+ return s.replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#39;"
+ })[c]);
+}
+
+async function copyStoryboard(){
+ try{
+  await navigator.clipboard.writeText(fullText);
+  alert("Storyboard copied!");
+ }catch(e){
+  const t=document.createElement("textarea");
+  t.value=fullText;
+  document.body.appendChild(t);
+  t.select();
+  document.execCommand("copy");
+  t.remove();
+  alert("Storyboard copy attempted. Check your clipboard.");
+ }
+}
+</script>
+</body>
+</html>
