@@ -1,182 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Video Storyboard Studio | NEXORA ZTUDIO</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#090b17;color:#f4f4ff;font-family:Arial,sans-serif;line-height:1.6}
-.wrap{max-width:850px;margin:auto;padding:25px 18px}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-weight:800;letter-spacing:3px}
-.logo span,.gradient{color:#aa83ff}
-a{color:#c3b2ff}
-h1{font-size:clamp(34px,7vw,55px);line-height:1.15;margin:20px 0}
-h2{margin-top:0}
-.muted{color:#b3b6ce}
-.tag{display:inline-block;border:1px solid #65518c;border-radius:30px;padding:8px 15px;margin-top:55px;font-size:13px}
-.card{background:#17182e;border:1px solid #393958;border-radius:25px;padding:25px;margin-top:28px}
-label{display:block;font-weight:bold;margin:18px 0 7px}
-input,select,textarea{width:100%;background:#0d1022;color:white;border:1px solid #454766;border-radius:13px;padding:15px;font:inherit}
-button{width:100%;border:0;border-radius:14px;padding:17px;color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:22px;background:linear-gradient(110deg,#8b35ec,#2863ee)}
-.secondary{background:#30334f;margin-top:12px}
-.scene{background:#101226;border:1px solid #454766;border-radius:15px;padding:18px;margin-top:15px}
-.scene strong{color:#b79aff}
-.scene p{white-space:pre-wrap;margin:8px 0}
-footer{margin:50px 0;color:#9c9eb9;font-size:13px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b17">
+  <meta name="description" content="NEXORA ZTUDIO creative marketing dashboard">
+  <title>Creative Dashboard | NEXORA ZTUDIO</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090b17;--card:#171a30;--border:#343957;--text:#f5f5ff;--muted:#aeb4ce;--purple:#913af4;--blue:#2867f2}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 85% 5%,#24204f 0,transparent 34%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}a:focus-visible{outline:3px solid #b7a0ff;outline-offset:4px}
+    .wrap{width:min(1100px,calc(100% - 36px));margin:auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+    .logo{font-weight:850;letter-spacing:.12em;font-size:1.12rem}.logo span{color:#68b9ff}
+    nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.95rem}nav a:hover,.back:hover{color:#fff}
+    .hero{padding:70px 0 34px}.eyebrow{color:#67caff;font-weight:750;letter-spacing:.16em;font-size:.79rem}
+    h1{font-size:clamp(2.1rem,6vw,3.8rem);line-height:1.12;margin:14px 0 18px;letter-spacing:-.04em}
+    .gradient{background:linear-gradient(90deg,#a97aff,#53b9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{color:var(--muted);font-size:1.08rem;max-width:680px;margin:0 0 25px}
+    .actions{display:flex;flex-wrap:wrap;gap:12px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 18px;border-radius:13px;font-weight:750;background:linear-gradient(100deg,var(--purple),var(--blue));color:#fff}
+    .button.secondary{background:#262a45;border:1px solid #474b6b}.button:hover{filter:brightness(1.12)}
+    .section-title{margin:44px 0 7px;font-size:1.65rem}.section-sub{margin:0 0 22px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .card{border:1px solid var(--border);background:linear-gradient(155deg,#1b1e38,#131627);border-radius:22px;padding:25px;display:flex;flex-direction:column;min-height:250px;box-shadow:0 10px 35px #0002}
+    .card:hover{border-color:#a178fc}.icon{font-size:2rem;margin-bottom:13px}.card h3{font-size:1.25rem;margin:0 0 9px}.card p{color:var(--muted);margin:0 0 22px;flex:1}
+    .card .button{align-self:flex-start}.tag{font-size:.77rem;letter-spacing:.07em;color:#72cfff;font-weight:800;margin-bottom:12px}.soon{color:#c4a7ff}
+    .notice{margin:34px 0 60px;border:1px solid var(--border);border-radius:18px;background:#15182d;padding:22px;color:var(--muted)}.notice strong{color:var(--text)}
+    footer{border-top:1px solid var(--border);padding:27px 0 40px;color:var(--muted);font-size:.9rem}
+    @media(max-width:650px){.hero{padding-top:48px}.grid{grid-template-columns:1fr}.card{min-height:220px}header{align-items:flex-start}nav{gap:13px}}
+  </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-<div class="logo">✦ NEXORA <span>ZTUDIO</span></div>
-<a href="index.html">← Home</a>
-</header>
-
-<div class="tag">FREE STORYBOARD PLANNER</div>
-<h1>Video <span class="gradient">Storyboard Studio</span></h1>
-<p class="muted">Plan your next TikTok, Instagram Reel or Facebook video with ready-to-edit scenes, voiceovers and filming ideas.</p>
-
-<div class="card">
-<h2>Create your storyboard</h2>
-
-<label for="business">Business category</label>
-<select id="business">
-<option>Car detailing / autospa</option>
-<option>Restaurant / cafe</option>
-<option>Beauty / skincare</option>
-<option>Fashion / retail</option>
-<option>Other business</option>
-</select>
-
-<label for="product">Product or service</label>
-<input id="product" value="Premium car wash" maxlength="100">
-
-<label for="style">Video style</label>
-<select id="style">
-<option value="promo">Promotional</option>
-<option value="story">Storytelling</option>
-<option value="educational">Educational</option>
-<option value="launch">Product launch</option>
-</select>
-
-<label for="duration">Video duration</label>
-<select id="duration">
-<option value="15">15 seconds</option>
-<option value="30" selected>30 seconds</option>
-<option value="60">60 seconds</option>
-</select>
-
-<label for="platform">Platform</label>
-<select id="platform">
-<option>TikTok</option>
-<option>Instagram Reels</option>
-<option>Facebook Reels</option>
-<option>YouTube Shorts</option>
-</select>
-
-<button onclick="generate()">✨ Generate storyboard</button>
-</div>
-
-<div class="card" id="result" hidden>
-<h2>Your video storyboard</h2>
-<p id="summary" class="muted"></p>
-<div id="scenes"></div>
-<button class="secondary" onclick="copyStoryboard()">Copy full storyboard</button>
-</div>
-
-<p class="muted" style="margin-top:25px;font-size:13px">Demo: This planner uses editable templates, not generative AI. No video is rendered. Your inputs are processed locally in your browser.</p>
-<footer>© 2026 NEXORA ZTUDIO</footer>
-</div>
-
-<script>
-let fullText="";
-
-function generate(){
- const product=document.getElementById("product").value.trim();
- if(!product){alert("Please enter a product or service.");return;}
- const business=document.getElementById("business").value;
- const style=document.getElementById("style").value;
- const duration=Number(document.getElementById("duration").value);
- const platform=document.getElementById("platform").value;
-
- const ideas={
- promo:[
- ["Hook","Show the most attractive result first.","Want to upgrade your experience with {p}?"],
- ["Problem","Show a common customer frustration.","Tired of settling for ordinary results?"],
- ["Solution","Film the service or product in action.","Discover {p}, designed with care."],
- ["Benefit","Show close-ups and the finished result.","See the difference for yourself."],
- ["CTA","Display your business name and contact method.","Message us today to learn more."]
- ],
- story:[
- ["Hook","Open with a relatable customer moment.","Every great result starts with a story."],
- ["Challenge","Show the customer's original problem.","Finding the right solution is not always easy."],
- ["Journey","Show the process behind your offering.","That is why we focus on {p}."],
- ["Result","Reveal the transformation or outcome.","The little details make a big difference."],
- ["CTA","Show your business name and next step.","Ready to start your own story? Contact us."]
- ],
- educational:[
- ["Hook","Ask a question on screen.","What should you know about {p}?"],
- ["Tip 1","Show a useful first step.","Start by understanding what you need."],
- ["Tip 2","Demonstrate the process.","Look for quality, care and consistency."],
- ["Tip 3","Show a practical example.","Choose the approach that suits your goals."],
- ["CTA","Invite viewers to ask questions.","Follow us for more tips about {p}."]
- ],
- launch:[
- ["Teaser","Show a close-up without revealing everything.","Something exciting is here."],
- ["Reveal","Show the full product or service.","Introducing {p}!"],
- ["Highlight","Film its most appealing features.","Created to make your experience better."],
- ["Demo","Show how it works or what it delivers.","Take a closer look at what makes it special."],
- ["CTA","Display a clear next step.","Contact us to find out more."]
- ]
- };
-
- const selected=ideas[style];
- const times=duration===15?[3,3,3,3,3]:duration===30?[4,6,8,7,5]:[8,12,16,14,10];
- let start=0;
- let html="";
- fullText="NEXORA ZTUDIO VIDEO STORYBOARD\n";
- fullText+="Business: "+business+"\nProduct: "+product+"\n";
- fullText+="Platform: "+platform+"\nDuration: "+duration+" seconds\n\n";
-
- selected.forEach((item,i)=>{
-  const end=start+times[i];
-  const voice=item[2].replaceAll("{p}",product);
-  const heading="Scene "+(i+1)+" | "+start+"-"+end+"s | "+item[0];
-  html+="<div class='scene'><strong>"+heading+"</strong><p><b>Visual:</b> "+escapeHTML(item[1])+"</p><p><b>Voiceover:</b> "+escapeHTML(voice)+"</p></div>";
-  fullText+=heading+"\nVisual: "+item[1]+"\nVoiceover: "+voice+"\n\n";
-  start=end;
- });
-
- document.getElementById("summary").textContent=duration+"-second "+platform+" video • 9:16 vertical format";
- document.getElementById("scenes").innerHTML=html;
- document.getElementById("result").hidden=false;
- document.getElementById("result").scrollIntoView({behavior:"smooth"});
-}
-
-function escapeHTML(s){
- return s.replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",
- '"':"&quot;","'":"&#39;"
- })[c]);
-}
-
-async function copyStoryboard(){
- try{
-  await navigator.clipboard.writeText(fullText);
-  alert("Storyboard copied!");
- }catch(e){
-  const t=document.createElement("textarea");
-  t.value=fullText;
-  document.body.appendChild(t);
-  t.select();
-  document.execCommand("copy");
-  t.remove();
-  alert("Storyboard copy attempted. Check your clipboard.");
- }
-}
-</script>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="index.html">NEXORA <span>ZTUDIO</span></a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="#tools">Tools</a>
+        <a href="index.html#pricing">Pricing</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="eyebrow">YOUR CREATIVE WORKSPACE</div>
+        <h1>Welcome to <span class="gradient">NEXORA ZTUDIO</span></h1>
+        <p class="lead">Plan your marketing faster. Open your caption writer, ad script creator and video storyboard tools from one place.</p>
+        <div class="actions">
+          <a class="button" href="#tools">Explore your tools ↓</a>
+          <a class="button secondary" href="index.html">← Back to homepage</a>
+        </div>
+      </section>
+      <section id="tools" aria-labelledby="tools-heading">
+        <h2 class="section-title" id="tools-heading">Creative tools</h2>
+        <p class="section-sub">Choose a tool to start creating.</p>
+        <div class="grid">
+          <article class="card">
+            <div class="icon" aria-hidden="true">✍️</div>
+            <div class="tag">AVAILABLE NOW</div>
+            <h3>Caption Studio</h3>
+            <p>Create editable social media captions for your products and services.</p>
+            <a class="button" href="caption-studio.html">Open Caption Studio →</a>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">🎬</div>
+            <div class="tag">AVAILABLE NOW</div>
+            <h3>Ad Script Studio</h3>
+            <p>Draft short video ad scripts with scene ideas and calls to action.</p>
+            <a class="button" href="ad-script-studio.html">Open Ad Script Studio →</a>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">🎞️</div>
+            <div class="tag">AVAILABLE NOW</div>
+            <h3>Video Storyboard Studio</h3>
+            <p>Plan vertical video scenes for TikTok, Reels and other platforms.</p>
+            <a class="button" href="video-storyboard.html">Open Storyboard Studio →</a>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">🖼️</div>
+            <div class="tag soon">COMING SOON</div>
+            <h3>AI Poster Studio</h3>
+            <p>Poster design and image generation are planned for a future release.</p>
+            <span class="button secondary" aria-disabled="true">Not available yet</span>
+          </article>
+        </div>
+      </section>
+      <aside class="notice"><strong>Early preview:</strong> Your current creative tools use editable templates, not live generative AI. Accounts, paid subscriptions and AI API integrations are not active yet.</aside>
+    </main>
+    <footer>© <span id="year">2026</span> NEXORA ZTUDIO · Built for creators and small businesses.</footer>
+  </div>
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>
