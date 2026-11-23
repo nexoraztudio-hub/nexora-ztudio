@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b17">
+<title>Caption Studio | NEXORA ZTUDIO</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#090b17;color:#f4f4ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0%,#222052 0%,#090b17 42%);min-height:100vh}a{color:#b6a8ff}header,main,footer{max-width:780px;margin:auto;padding:22px}header{display:flex;align-items:center;justify-content:space-between;gap:10px}header strong{letter-spacing:.12em;font-size:14px}.pill{background:#25203c;border:1px solid #554a8b;padding:7px 11px;border-radius:30px;font-size:12px}h1{font-size:clamp(32px,7vw,54px);line-height:1.1;margin:20px 0 12px}h1 span{color:#a78bfa}p{color:#b7b8cd;line-height:1.6}.card{background:#15182b;border:1px solid #343756;border-radius:20px;padding:20px;margin:22px 0;box-shadow:0 12px 35px #0003}label{display:block;font-weight:650;margin:16px 0 8px}input,select,textarea{width:100%;padding:13px 14px;background:#0c1020;color:#fff;border:1px solid #424560;border-radius:11px;font:inherit}textarea{min-height:165px;resize:vertical;line-height:1.6}button{background:linear-gradient(100deg,#7c3aed,#2563eb);color:#fff;border:0;border-radius:12px;padding:14px 18px;font-weight:750;font-size:15px;cursor:pointer;width:100%;margin-top:18px}button.secondary{background:#272a44;border:1px solid #575b7c;margin-top:10px}.note{font-size:12px;color:#a9aac4}#outputSection{display:none}.tags{color:#b5a1ff;font-size:13px}footer{color:#858aa6;font-size:12px;padding-bottom:40px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #b69cff;outline-offset:2px}
+</style>
+</head>
+<body>
+<header><strong>✦ NEXORA ZTUDIO</strong><a class="pill" href="./index.html">← Home</a></header>
+<main>
+<div class="pill" style="display:inline-block">FREE TEMPLATE TOOL</div>
+<h1>Caption <span>Studio</span></h1>
+<p>Create a ready-to-edit social media caption and relevant hashtags for your small business. Works directly on your iPhone.</p>
+<section class="card" aria-label="Caption generator">
+<label for="business">Business category</label><select id="business"><option value="car">Car detailing / autospa</option><option value="food">Restaurant / café</option><option value="beauty">Beauty / skincare</option><option value="retail">Retail / other business</option></select>
+<label for="product">Product or service</label><input id="product" maxlength="120" placeholder="e.g. Premium ceramic coating" value="Premium car wash">
+<label for="tone">Caption style</label><select id="tone"><option value="professional">Professional</option><option value="friendly">Friendly</option><option value="energetic">Energetic</option></select>
+<label for="platform">Platform</label><select id="platform"><option>Instagram</option><option>TikTok</option><option>Facebook</option></select>
+<button id="generate" type="button">✨ Generate caption</button>
+</section>
+<section class="card" id="outputSection" aria-live="polite"><h2>Your caption</h2><textarea id="result" aria-label="Generated caption"></textarea><button id="copy" type="button" class="secondary">Copy caption</button><p class="note" id="copyStatus"></p></section>
+<p class="note">Demo: this generator uses editable writing templates, not a generative AI service. It does not save or transmit your inputs.</p>
+</main><footer>© <span id="year"></span> NEXORA ZTUDIO · Built for creators and small businesses</footer>
+<script>
+const categories={car:{name:'car care',tags:'#CarDetailing #AutoSpa #CarCare #Detailing'},food:{name:'great food',tags:'#FoodLovers #CafeLife #SupportLocal #Foodie'},beauty:{name:'self-care',tags:'#Skincare #BeautyCare #GlowUp #BeautyTips'},retail:{name:'local shopping',tags:'#SmallBusiness #ShopLocal #NewFinds #SupportLocal'}};
+const openings={professional:'Quality and care in every detail.',friendly:'Hey there! We have something special for you.',energetic:'🔥 Ready to level things up?'};
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('generate').addEventListener('click',()=>{const product=document.getElementById('product').value.trim();if(!product){alert('Please enter a product or service.');document.getElementById('product').focus();return;}const cat=categories[document.getElementById('business').value];const tone=document.getElementById('tone').value;const platform=document.getElementById('platform').value;const ending=tone==='energetic'?'Send us a message and get started today!':tone==='friendly'?'Drop us a message — we would love to help!':'Contact us today to learn more.';const text=`${openings[tone]}\n\nDiscover ${product} — made for people who appreciate ${cat.name}. ✨\n\n${ending}\n\n📱 Find us on ${platform}\n\n${cat.tags}`;document.getElementById('result').value=text;document.getElementById('outputSection').style.display='block';document.getElementById('copyStatus').textContent='';document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'start'});});
+document.getElementById('copy').addEventListener('click',async()=>{const value=document.getElementById('result').value;try{await navigator.clipboard.writeText(value);document.getElementById('copyStatus').textContent='Copied! Paste into your social media post.';}catch(e){document.getElementById('result').focus();document.getElementById('result').select();document.getElementById('copyStatus').textContent='Select Copy from the iPhone text menu.';}});
+</script>
+</body></html>
