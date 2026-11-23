@@ -147,5 +147,81 @@ async function copyScript(){
  }
 }
 </script>
+ 
+<script>
+(function () {
+  const KEY = "nexora_ztudio_projects_v1";
+
+  // Get the generated script textarea
+  const output = document.getElementById("result");
+
+  if (!output) return;
+
+  // Create the Save to Projects button
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.textContent = "💾 Save to Projects";
+  saveButton.style.display = "block";
+  saveButton.style.width = "100%";
+  saveButton.style.marginTop = "14px";
+  saveButton.style.padding = "14px";
+  saveButton.style.border = "none";
+  saveButton.style.borderRadius = "12px";
+  saveButton.style.color = "white";
+  saveButton.style.fontWeight = "bold";
+  saveButton.style.fontSize = "16px";
+  saveButton.style.background =
+    "linear-gradient(90deg,#7c3aed,#2563eb)";
+
+  // Put the new button below the output
+  output.insertAdjacentElement("afterend", saveButton);
+
+  // Save the generated script
+  saveButton.addEventListener("click", function () {
+    const content = output.value.trim();
+
+    if (!content) {
+      alert("Generate an ad script first.");
+      return;
+    }
+
+    const title = prompt(
+      "Project title:",
+      "My Ad Script"
+    );
+
+    if (title === null) return;
+
+    try {
+      const projects = JSON.parse(
+        localStorage.getItem(KEY) || "[]"
+      );
+
+      if (!Array.isArray(projects)) {
+        throw new Error("Invalid project data");
+      }
+
+      projects.unshift({
+        id: "p-" + Date.now() + "-" +
+          Math.random().toString(36).slice(2, 8),
+        business: "NEXORA ZTUDIO",
+        title: title.trim() || "My Ad Script",
+        type: "Ad Script",
+        content: content,
+        updatedAt: new Date().toISOString()
+      });
+
+      localStorage.setItem(
+        KEY,
+        JSON.stringify(projects)
+      );
+
+      alert("✅ Ad script saved successfully!");
+    } catch (error) {
+      alert("Unable to save: " + error.message);
+    }
+  });
+})();
+</script>
 </body>
 </html>
