@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ad Script Studio | NEXORA ZTUDIO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090b17;color:#f5f5ff;font-family:Arial,sans-serif;line-height:1.6}
+.wrap{max-width:760px;margin:auto;padding:24px 18px 70px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{font-weight:800;letter-spacing:2px;font-size:15px}
+.logo span{color:#51c8ff}
+a{color:#b8a3ff}
+h1{font-size:clamp(36px,8vw,56px);line-height:1.15;margin:20px 0}
+.gradient{background:linear-gradient(90deg,#a855f7,#3989ff);color:transparent;background-clip:text}
+.sub{color:#b6b8d0;font-size:17px}
+.tag{display:inline-block;border:1px solid #67509d;border-radius:40px;padding:7px 15px;color:#d6c7ff;font-size:12px;margin-top:45px}
+.panel{background:#17182d;border:1px solid #3b3d61;border-radius:22px;padding:22px;margin-top:28px}
+label{display:block;font-weight:bold;margin:16px 0 7px}
+input,select,textarea{width:100%;background:#0c0e20;color:white;border:1px solid #454767;border-radius:12px;padding:14px;font:inherit}
+textarea{min-height:300px;resize:vertical}
+button{width:100%;padding:15px;border:0;border-radius:13px;background:linear-gradient(90deg,#8539ed,#2563eb);color:white;font-size:16px;font-weight:bold;margin-top:24px;cursor:pointer}
+.copy{background:#30314e;margin-top:12px}
+footer{color:#9295b1;font-size:13px;margin-top:38px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="logo">NEXORA <span>ZTUDIO</span></div>
+<a href="index.html">← Home</a>
+</header>
+
+<div class="tag">FREE SCRIPT TEMPLATE TOOL</div>
+<h1>Ad Script <span class="gradient">Studio</span></h1>
+<p class="sub">Create a short video advertising script for your business, directly on your iPhone.</p>
+
+<div class="panel">
+<label for="category">Business category</label>
+<select id="category">
+<option>Car detailing / autospa</option>
+<option>Restaurant / cafe</option>
+<option>Beauty / skincare</option>
+<option>Retail / online shop</option>
+<option>Other business</option>
+</select>
+
+<label for="product">Product or service</label>
+<input id="product" value="Premium car wash" maxlength="120">
+
+<label for="platform">Platform</label>
+<select id="platform">
+<option>TikTok</option>
+<option>Instagram Reels</option>
+<option>Facebook</option>
+</select>
+
+<label for="duration">Video duration</label>
+<select id="duration">
+<option value="15">15 seconds</option>
+<option value="30" selected>30 seconds</option>
+<option value="60">60 seconds</option>
+</select>
+
+<label for="tone">Advertising style</label>
+<select id="tone">
+<option>Professional</option>
+<option>Energetic</option>
+<option>Friendly</option>
+<option>Luxury</option>
+</select>
+
+<button onclick="generate()">✨ Generate ad script</button>
+</div>
+
+<div class="panel">
+<h2>Your video script</h2>
+<textarea id="result" readonly placeholder="Your script will appear here..."></textarea>
+<button class="copy" onclick="copyScript()">Copy script</button>
+</div>
+
+<footer>
+Demo: This tool uses editable script templates, not generative AI. Inputs are processed locally in your browser.
+<p>© 2026 NEXORA ZTUDIO</p>
+</footer>
+</div>
+
+<script>
+function generate(){
+ const product=document.getElementById("product").value.trim();
+ if(!product){alert("Please enter a product or service.");return;}
+ const category=document.getElementById("category").value;
+ const platform=document.getElementById("platform").value;
+ const duration=Number(document.getElementById("duration").value);
+ const tone=document.getElementById("tone").value;
+ const hooks={
+ Professional:"Looking for a smarter way to upgrade your experience?",
+ Energetic:"Stop scrolling! You need to see this!",
+ Friendly:"Hey! We've got something special for you.",
+ Luxury:"The details make all the difference."
+ };
+ const benefit={
+ "Car detailing / autospa":"Give your vehicle the attention it deserves.",
+ "Restaurant / cafe":"Make your next food experience memorable.",
+ "Beauty / skincare":"Bring a little extra care to your routine.",
+ "Retail / online shop":"Discover something worth adding to your collection.",
+ "Other business":"Discover a service designed around your needs."
+ };
+ const segments=duration===15
+ ?[
+ ["0–3s","HOOK",hooks[tone]],
+ ["3–10s","PRODUCT",`Show ${product}. ${benefit[category]}`],
+ ["10–15s","CTA","Message us today to learn more."]
+ ]
+ :duration===30
+ ?[
+ ["0–5s","HOOK",hooks[tone]],
+ ["5–12s","PROBLEM","Show a common customer need or frustration."],
+ ["12–23s","SOLUTION",`Introduce ${product}. ${benefit[category]}`],
+ ["23–30s","CTA","Invite viewers to message your business today."]
+ ]
+ :[
+ ["0–8s","HOOK",hooks[tone]],
+ ["8–20s","PROBLEM","Show the customer's everyday challenge."],
+ ["20–35s","SOLUTION",`Introduce ${product}. ${benefit[category]}`],
+ ["35–48s","DEMONSTRATION","Show how the product or service works."],
+ ["48–55s","BENEFIT","Highlight a genuine benefit without making unsupported claims."],
+ ["55–60s","CTA","Invite viewers to contact your business."]
+ ];
+ const script=`NEXORA ZTUDIO — AD SCRIPT STUDIO\nPlatform: ${platform}\nBusiness: ${category}\nProduct: ${product}\nDuration: ${duration} seconds\nStyle: ${tone}\n\n`+
+ segments.map(s=>`[${s[0]}] ${s[1]}\nVisual: Film a vertical scene related to ${product}.\nVoiceover: ${s[2]}`).join("\n\n")+
+ "\n\nFORMAT: 9:16 vertical video\nReview and customize before publishing.";
+ document.getElementById("result").value=script;
+}
+async function copyScript(){
+ const value=document.getElementById("result").value;
+ if(!value){alert("Generate a script first.");return;}
+ try{
+  await navigator.clipboard.writeText(value);
+  alert("Script copied!");
+ }catch(e){
+  const area=document.getElementById("result");
+  area.focus();area.select();
+  alert("Select Copy from the iPhone text menu.");
+ }
+}
+</script>
+</body>
+</html>
