@@ -31,4 +31,61 @@ document.getElementById('year').textContent=new Date().getFullYear();
 document.getElementById('generate').addEventListener('click',()=>{const product=document.getElementById('product').value.trim();if(!product){alert('Please enter a product or service.');document.getElementById('product').focus();return;}const cat=categories[document.getElementById('business').value];const tone=document.getElementById('tone').value;const platform=document.getElementById('platform').value;const ending=tone==='energetic'?'Send us a message and get started today!':tone==='friendly'?'Drop us a message — we would love to help!':'Contact us today to learn more.';const text=`${openings[tone]}\n\nDiscover ${product} — made for people who appreciate ${cat.name}. ✨\n\n${ending}\n\n📱 Find us on ${platform}\n\n${cat.tags}`;document.getElementById('result').value=text;document.getElementById('outputSection').style.display='block';document.getElementById('copyStatus').textContent='';document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'start'});});
 document.getElementById('copy').addEventListener('click',async()=>{const value=document.getElementById('result').value;try{await navigator.clipboard.writeText(value);document.getElementById('copyStatus').textContent='Copied! Paste into your social media post.';}catch(e){document.getElementById('result').focus();document.getElementById('result').select();document.getElementById('copyStatus').textContent='Select Copy from the iPhone text menu.';}});
 </script>
+  
+<script>
+(function () {
+  const KEY = "nexora_ztudio_projects_v1";
+
+  const copyButton = document.getElementById("copy");
+  const output = document.getElementById("output");
+
+  if (!copyButton || !output) return;
+
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.textContent = "💾 Save to Projects";
+
+  copyButton.insertAdjacentElement("afterend", saveButton);
+
+  saveButton.addEventListener("click", function () {
+    const content = output.value || output.textContent;
+    const product =
+      document.getElementById("product")?.value || "Untitled";
+
+    if (!content.trim()) {
+      alert("Generate a caption first.");
+      return;
+    }
+
+    const title = prompt("Project title:", product);
+    if (title === null) return;
+
+    try {
+      const projects = JSON.parse(
+        localStorage.getItem(KEY) || "[]"
+      );
+
+      if (!Array.isArray(projects)) {
+        throw new Error("Invalid project data");
+      }
+
+      projects.unshift({
+        id: "p-" + Date.now(),
+        business: product,
+        title: title.trim() || product,
+        type: "Caption",
+        content: content.trim(),
+        updatedAt: new Date().toISOString()
+      });
+
+      localStorage.setItem(KEY, JSON.stringify(projects));
+
+      alert("✅ Caption saved successfully!");
+    } catch (error) {
+      alert("Unable to save project: " + error.message);
+    }
+  });
+})();
+</script>
+
 </body></html>
