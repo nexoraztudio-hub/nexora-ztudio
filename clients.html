@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b17">
+<title>Client & Brand Manager | NEXORA ZTUDIO</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f6f4ff;background:#090b17}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 45% 0,#281a50,#090b17 53%);padding:24px 15px 70px}
+.wrap{max-width:920px;margin:auto}header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:30px}header strong{letter-spacing:.05em}nav{display:flex;flex-wrap:wrap;gap:13px}a{color:#c2a8ff;text-decoration:none}h1{font-size:clamp(30px,6vw,45px);margin:8px 0 5px}h2{margin:0 0 14px;font-size:23px}h3{margin:0 0 8px}p{line-height:1.55}.muted,.hint{color:#aaa9c2}.hint{font-size:13px}.card{background:#18182d;border:1px solid #41416b;border-radius:22px;margin-top:23px;padding:clamp(18px,4vw,28px)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}label{display:block;font-weight:650;margin:15px 0 7px}input,select,textarea{width:100%;min-width:0;border:1px solid #555477;border-radius:12px;background:#0d1021;color:#fff;padding:13px;font:inherit}textarea{min-height:95px;resize:vertical}button{border:1px solid #626186;border-radius:12px;background:#30304e;color:#fff;font:inherit;font-weight:650;padding:12px 15px;cursor:pointer}button.primary{background:linear-gradient(90deg,#8437ee,#2765ed);border:0}button.danger{border-color:#d46280;color:#ffe5ed;background:#432638}button:disabled{opacity:.4;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.actions button{flex-grow:1}.tag{display:inline-block;border:1px solid #5a5189;border-radius:999px;color:#c9b3ff;padding:4px 10px;font-size:12px}.list{display:grid;gap:14px;margin-top:20px}.item{border:1px solid #45456e;background:#111326;border-radius:18px;padding:19px;overflow-wrap:anywhere}.item p{margin:8px 0}.item .muted{font-size:14px}.item .actions{margin-top:13px}.item a{overflow-wrap:anywhere}.brandhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.swatch{height:32px;width:32px;border-radius:10px;border:2px solid #aaa;flex-shrink:0}.small{font-size:13px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.empty{text-align:center;padding:25px;border:1px dashed #555477;border-radius:14px;color:#aeadc6}.notice{min-height:20px;color:#a7edce}footer{margin-top:42px;color:#aaa9c2;font-size:13px}#backupFile{display:none}hr{border:0;border-top:1px solid #3d3b5c;margin:22px 0}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #bba1ff;outline-offset:2px}@media(max-width:600px){.grid{grid-template-columns:1fr}.card{border-radius:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><strong>✦ NEXORA ZTUDIO</strong><nav><a href="dashboard.html">Dashboard</a><a href="projects.html">Projects</a><a href="caption-studio.html">Caption</a><a href="ad-script-studio.html">Ad Script</a><a href="video-storyboard.html">Storyboard</a></nav></header>
+<h1>Client &amp; <span style="color:#ab89ff">Brand Manager</span></h1>
+<p class="muted">Organize brands and link your existing studio projects without modifying them.</p>
+<section class="card">
+<h2 id="formHeading">Create brand profile</h2>
+<form id="brandForm">
+<div class="grid"><div><label for="brandName">Brand / business name *</label><input id="brandName" maxlength="120" required placeholder="e.g. Premium Car Wash"></div><div><label for="clientName">Client / contact name</label><input id="clientName" maxlength="120" placeholder="e.g. Business owner"></div><div><label for="email">Contact email</label><input id="email" type="email" maxlength="180" placeholder="owner@example.com"></div><div><label for="phone">Contact phone</label><input id="phone" type="tel" maxlength="60" placeholder="Optional"></div><div><label for="industry">Industry</label><input id="industry" maxlength="100" placeholder="e.g. Automotive detailing"></div><div><label for="status">Status</label><select id="status"><option>Lead</option><option>Active</option><option>Paused</option><option>Completed</option></select></div><div><label for="website">Website / social link</label><input id="website" maxlength="300" placeholder="https://example.com"></div><div><label for="brandColor">Brand color</label><input id="brandColor" type="color" value="#8844ee" style="min-height:49px;padding:6px"></div></div>
+<label for="notes">Brand brief / notes</label><textarea id="notes" maxlength="4000" placeholder="Brand voice, target customers, creative requirements..."></textarea>
+<div class="actions"><button class="primary" id="saveBrand" type="submit">💾 Save brand</button><button id="clearBrand" type="button">Clear form</button></div>
+</form><p class="notice" id="notice" role="status" aria-live="polite"></p>
+</section>
+<section class="card"><div class="row"><h2>Saved brands</h2><strong id="brandCount">0</strong></div>
+<input id="brandSearch" type="search" placeholder="Search brands and clients..." aria-label="Search brands">
+<div class="list" id="brandList"></div></section>
+<section class="card" id="linkSection"><h2>Organize existing projects</h2>
+<p class="muted small">Assign projects to a brand. The link is stored separately; original project text and Step 8 studio links are untouched.</p>
+<div class="grid"><div><label for="projectSelect">Existing project</label><select id="projectSelect"></select></div><div><label for="assignBrand">Assign to brand</label><select id="assignBrand"></select></div></div>
+<div class="actions"><button class="primary" type="button" id="assignButton">Link project to brand</button><button type="button" id="unlinkButton">Remove brand link</button></div>
+<p class="hint" id="projectInfo"></p><div class="list" id="projectList"></div></section>
+<section class="card"><h2>Brand data backup</h2>
+<p class="muted small">Exports brand profiles and their project links only. For your actual captions, scripts and storyboards, use <a href="projects.html">Project Manager → Export backup</a> separately.</p>
+<div class="actions"><button id="exportBrand" type="button">⬇️ Export brand backup</button><button id="importBrand" type="button">⬆️ Import brand backup</button><input type="file" id="backupFile" accept=".json,application/json"></div>
+<p class="hint">Data is stored only in this browser and website. Do not clear Safari website data.</p></section>
+<footer>© 2026 NEXORA ZTUDIO · Client &amp; Brand Manager · Step 9</footer></div>
+<script>
+(()=>{'use strict';
+const BRAND_KEY='nexora_ztudio_brands_v1';
+const LINK_KEY='nexora_ztudio_project_brand_links_v1';
+const PROJECT_KEY='nexora_ztudio_projects_v1'; // Read only! Never write this key here.
+const $=id=>document.getElementById(id);
+let brands=[],links={},projects=[],editing=null,ready=true;
+const uid=()=>('b-'+Date.now()+'-'+Math.random().toString(36).slice(2,10));
+function message(t,bad=false){$('notice').textContent=t;$('notice').style.color=bad?'#ff9ba9':'#a7edce';}
+function readArray(key){const raw=localStorage.getItem(key);if(raw===null)return [];const a=JSON.parse(raw);if(!Array.isArray(a))throw Error('Invalid data at '+key);return a;}
+function readLinks(){const raw=localStorage.getItem(LINK_KEY);if(raw===null)return {};const v=JSON.parse(raw);if(!v||typeof v!=='object'||Array.isArray(v))throw Error('Invalid link data');return v;}
+function persistBrands(value){localStorage.setItem(BRAND_KEY,JSON.stringify(value));}
+function persistLinks(value){localStorage.setItem(LINK_KEY,JSON.stringify(value));}
+function text(tag,value,cls){const e=document.createElement(tag);e.textContent=String(value??'');if(cls)e.className=cls;return e;}
+function btn(label,handler,cls){const b=text('button',label,cls);b.type='button';b.addEventListener('click',handler);return b;}
+function clearForm(){$('brandForm').reset();$('brandColor').value='#8844ee';editing=null;$('formHeading').textContent='Create brand profile';$('saveBrand').textContent='💾 Save brand';}
+function websiteLink(raw){try{const u=new URL(raw);if(!['https:','http:'].includes(u.protocol))return null;return u.href;}catch{return null;}}
+function brandName(id){const b=brands.find(x=>x.id===id);return b?b.name:'Unassigned';}
+function renderBrands(){const list=$('brandList');list.replaceChildren();$('brandCount').textContent=String(brands.length);const term=$('brandSearch').value.toLowerCase();const filtered=brands.filter(b=>[b.name,b.client,b.industry,b.status,b.notes].join(' ').toLowerCase().includes(term));
+if(!filtered.length){list.append(text('div',brands.length?'No brands match your search.':'No brands yet. Create your first brand.','empty'));return;}
+for(const b of filtered){const c=text('article','','item');const head=text('div','','brandhead');const sw=text('span','','swatch');sw.style.background=/^#[0-9a-fA-F]{6}$/.test(b.color)?b.color:'#8844ee';head.append(sw,text('h3',b.name),text('span',b.status||'Lead','tag'));c.append(head);
+if(b.client)c.append(text('p','Contact: '+b.client));if(b.industry)c.append(text('p','Industry: '+b.industry,'muted'));if(b.email)c.append(text('p','Email: '+b.email,'muted'));if(b.phone)c.append(text('p','Phone: '+b.phone,'muted'));
+if(b.website){const safe=websiteLink(b.website);if(safe){const p=document.createElement('p');const a=text('a','Website / social link');a.href=safe;a.target='_blank';a.rel='noopener noreferrer';p.append(a);c.append(p);}}
+if(b.notes)c.append(text('p',b.notes,'muted'));const matching=projects.filter(p=>links[String(p.id)]===b.id);c.append(text('p',matching.length+' linked project(s)','tag'));
+for(const p of matching){const row=text('div',String(p.title||'Untitled')+' · '+String(p.type||'Project'),'small muted');c.append(row);}
+const actions=text('div','','actions');actions.append(btn('Edit brand',()=>{editing=b.id;$('brandName').value=b.name||'';$('clientName').value=b.client||'';$('email').value=b.email||'';$('phone').value=b.phone||'';$('industry').value=b.industry||'';$('status').value=b.status||'Lead';$('website').value=b.website||'';$('brandColor').value=/^#[0-9a-fA-F]{6}$/.test(b.color)?b.color:'#8844ee';$('notes').value=b.notes||'';$('formHeading').textContent='Edit brand profile';$('saveBrand').textContent='💾 Update brand';window.scrollTo({top:0,behavior:'smooth'});message('Editing brand: '+b.name);}));
+actions.append(btn('Delete brand',()=>{if(!confirm('Delete brand "'+b.name+'"? Project content will remain saved.'))return;const nextBrands=brands.filter(x=>x.id!==b.id);const nextLinks={...links};for(const k of Object.keys(nextLinks)){if(nextLinks[k]===b.id)delete nextLinks[k];}try{persistBrands(nextBrands);persistLinks(nextLinks);brands=nextBrands;links=nextLinks;if(editing===b.id)clearForm();renderAll();message('Brand deleted. Original projects were not deleted.');}catch(e){message('Delete failed: '+e.message,true);}},'danger'));
+c.append(actions);list.append(c);}}
+function fillSelect(el,items,emptyText){el.replaceChildren();if(!items.length){const op=new Option(emptyText,'');el.append(op);el.disabled=true;return;}el.disabled=false;for(const [name,id] of items)el.append(new Option(name,id));}
+function renderAssignments(){const sel=$('projectSelect');const previous=sel.value;const brandSel=$('assignBrand');const previousBrand=brandSel.value;
+fillSelect(sel,projects.filter(p=>p&&p.id!=null).map(p=>[String(p.title||'Untitled')+' · '+String(p.type||'Project'),String(p.id)]),'No saved projects');
+if(previous&&projects.some(p=>String(p.id)===previous))sel.value=previous;
+fillSelect(brandSel,brands.map(b=>[b.name,b.id]),'Create a brand first');if(brands.some(b=>b.id===previousBrand))brandSel.value=previousBrand;
+$('assignButton').disabled=!projects.length||!brands.length;$('unlinkButton').disabled=!projects.length;
+$('projectInfo').textContent=projects.length+' existing project(s) found in this browser. Step 8 project data is read-only here.';
+const list=$('projectList');list.replaceChildren();if(!projects.length){list.append(text('div','No projects visible in this browser. Open Project Manager using this same Safari browser.','empty'));return;}
+for(const p of projects){if(!p||p.id==null)continue;const c=text('article','','item');c.append(text('h3',p.title||'Untitled'));c.append(text('p',(p.type||'Project')+' · Brand: '+brandName(links[String(p.id)]),'muted'));const actions=text('div','','actions');actions.append(btn('Select for linking',()=>{sel.value=String(p.id);$('linkSection').scrollIntoView({behavior:'smooth'});}));c.append(actions);list.append(c);}}
+function renderAll(){renderBrands();renderAssignments();}
+function refreshProjects(){try{projects=readArray(PROJECT_KEY);renderAll();}catch(e){projects=[];renderAll();$('projectInfo').textContent='Cannot read saved projects: '+e.message;message('Existing project data could not be read. Do not clear browser data.',true);}}
+$('brandForm').addEventListener('submit',e=>{e.preventDefault();if(!ready)return;const name=$('brandName').value.trim();if(!name)return;const item={id:editing||uid(),name,client:$('clientName').value.trim(),email:$('email').value.trim(),phone:$('phone').value.trim(),industry:$('industry').value.trim(),status:$('status').value,website:$('website').value.trim(),color:$('brandColor').value,notes:$('notes').value.trim(),updatedAt:new Date().toISOString()};const next=editing?brands.map(b=>b.id===editing?{...b,...item}:b):[item,...brands];try{persistBrands(next);brands=next;clearForm();renderAll();message('✅ Brand saved successfully.');}catch(err){message('Unable to save brand: '+err.message,true);}});
+$('clearBrand').addEventListener('click',()=>{clearForm();message('Form cleared; saved data unchanged.');});
+$('brandSearch').addEventListener('input',renderBrands);
+$('assignButton').addEventListener('click',()=>{const pid=$('projectSelect').value;const bid=$('assignBrand').value;if(!pid||!bid)return;const next={...links,[pid]:bid};try{persistLinks(next);links=next;renderAll();message('✅ Project linked to '+brandName(bid)+'.');}catch(e){message('Could not link project: '+e.message,true);}});
+$('unlinkButton').addEventListener('click',()=>{const pid=$('projectSelect').value;if(!pid)return;const next={...links};delete next[pid];try{persistLinks(next);links=next;renderAll();message('Project link removed. Original project unchanged.');}catch(e){message(e.message,true);}});
+$('exportBrand').addEventListener('click',()=>{const backup={format:'nexora-brand-backup-v1',exportedAt:new Date().toISOString(),brands,links};const url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='nexora-brand-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);message('Brand backup download started. Save it to Files.');});
+$('importBrand').addEventListener('click',()=>$('backupFile').click());
+$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text());if(data.format!=='nexora-brand-backup-v1'||!Array.isArray(data.brands)||!data.brands.every(b=>b&&typeof b.id==='string'&&typeof b.name==='string')||!data.links||typeof data.links!=='object'||Array.isArray(data.links)||Object.values(data.links).some(v=>typeof v!=='string'))throw Error('Not a valid NEXORA brand backup');if(!confirm('Import brand profiles and links? Existing brand IDs will be updated.'))return;const map=new Map(brands.map(b=>[b.id,b]));for(const b of data.brands)map.set(b.id,b);const nextBrands=[...map.values()];const nextLinks={...links,...data.links};persistBrands(nextBrands);persistLinks(nextLinks);brands=nextBrands;links=nextLinks;clearForm();renderAll();message('✅ Brand backup imported. Original projects unchanged.');}catch(err){message('Import failed: '+err.message,true);}finally{e.target.value='';}});
+try{brands=readArray(BRAND_KEY);links=readLinks();projects=readArray(PROJECT_KEY);renderAll();}catch(err){ready=false;$('saveBrand').disabled=true;$('assignButton').disabled=true;$('unlinkButton').disabled=true;message('Stored data could not be read: '+err.message+'. Do not overwrite or clear your browser data.',true);}
+window.addEventListener('pageshow',()=>{if(ready)refreshProjects();});
+})();
+</script>
+</body>
+</html>
